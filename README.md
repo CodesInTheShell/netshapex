@@ -19,12 +19,18 @@ import matplotlib.pyplot as plt
 
 import netshapex
 
-G1, nodes_fixed_postions = netshapex.io.read("/home/path/to/shapefile/edge_streets.shp")
+G1, nodes_fixed_postions = netshapex.io.read("/path/to/shp/edge_streets.shp")
+
 print ("=============NODES============")
+
 print (G1.nodes(data=True))
+
 print ("=============EDGES============")
+
 print (G1.edges(data=True))
+
 nx.draw_networkx(G1, nodes_fixed_postions, with_labels=True)
+
 plt.show()
 
 ------------------------ EXAMPLE USAGE - Writing a shapelfile--------------------------------
