@@ -242,6 +242,73 @@ class io():
                                     'properties': e[2]['geom']['properties']
                                     })
 
+class Reprojector:
+    """ Class for reprojecting shp files."""
+
+    def reproject(self, inshpdir, outshpdir, crs):
+        """ 
+        Function that reprojects shp file crs to a given crs. Reprojected .shp files will be on the outshp \
+        directory. Reprojected .shp files will have the same name and all attributes from inshpdir.
+
+        PARAMETER(S):
+
+        : inshpdir : the directory of shp file to be reprojected.
+
+        : outshpdir : the directory of reprojected .shp files. 
+
+        : crs : Projection to use. See fiona crs documentation.
+
+        EXAMPLE(S):
+
+        import netshapex
+        reproj = netshapex.Reprojector()
+        reproj.reproject("home/path/unprojecteddirectory" , "home/path/projecteddirectory", 'EPSG:4326')
+
+        """
+
+        self.inshpdir = inshpdir
+
+        self.outshpdir = outshpdir
+
+        self.crs = crs
+
+        logging.info('%s %s', "Preparing to reproject files in :", self.inshpdir)
+
+        # Getting all the path of .shp files
+        path_of_shp_files= []
+
+        for filename in os.listdir(self.inshpdir):
+            if filename.endswith(".shp"): 
+                path_of_shp_files.append(os.path.join(self.inshpdir +"/", filename))
+                logging.info('%s %s', "shp file found: ", filename)
+
+        # Reading the input .shp files.
+        for shpf in path_of_shp_files:
+
+            output_file_name = (os.path.basename(shpf))
+
+            with fiona.open(shpf) as input_shp:
+
+                meta = input_shp.meta
+                schema = input_shp.schema
+
+            # Writing the output .shp files
+            logging.info('%s %s', "Writing reprojected files to :", self.outshpdir)
+
+            with fiona.open(self.outshpdir + '/' + output_file_name, 'w', crs=self.crs, \
+                driver='ESRI Shapefile', schema=schema) as output_shp:
+
+                with fiona.open(shpf) as input_shp:
+
+                    meta = input_shp.meta
+
+                    for f in input_shp:
+
+                        output_shp.write(f)
+
+            logging.info('%s', "Reprojecting done.")
+
+
 
 ####################### BEGIN SECTION FOR HELPER FUNCTIONS ##########################
 
