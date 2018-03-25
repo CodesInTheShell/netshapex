@@ -247,7 +247,7 @@ class Reprojector:
 
     def reproject(self, inshpdir, outshpdir, crs):
         """ 
-        Function that reprojects shp file crs to a given crs. Reprojected .shp files will be on the outshp \
+        Function that reprojects all shp files in inshpdir to a given crs. Reprojected .shp files will be on the outshp \
         directory. Reprojected .shp files will have the same name and all attributes from inshpdir.
 
         PARAMETER(S):
