@@ -15,6 +15,7 @@ When reading a type LineString, nodes are automatically created in the graph.
 ------------------------ EXAMPLE USAGE - Reading a shapelfile--------------------------------
 
 import networkx as nx
+
 import matplotlib.pyplot as plt
 
 import netshapex
@@ -36,6 +37,7 @@ plt.show()
 ------------------------ EXAMPLE USAGE - Writing a shapelfile--------------------------------
 
 import networkx as nx
+
 import matplotlib.pyplot as plt
 
 import netshapex
