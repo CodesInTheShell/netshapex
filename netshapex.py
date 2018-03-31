@@ -247,7 +247,7 @@ class Reprojector:
 
     def reproject(self, inshpdir, outshpdir, crs):
         """ 
-        Function that reprojects all shp files in inshpdir to a given crs. Reprojected .shp files will be on the outshp \
+        Function that reprojects shp file crs to a given crs. Reprojected .shp files will be on the outshp \
         directory. Reprojected .shp files will have the same name and all attributes from inshpdir.
 
         PARAMETER(S):
@@ -354,6 +354,43 @@ def getCrs(path):
         crs = shpfile.crs
 
         return crs
+
+def selectNodeByAttributeValue(graph, attr_field, attr_value):
+    """
+    Returns a list of nodes filterd by the given attribute field and corresponding value.
+
+    Note: To select a single unique node. You must define a unique attribute value in your layer.
+
+    PARAMETER(S)
+
+    : graph : A networkx graph object.
+
+    : attr_field : Attribute field name of the feature.
+
+    : attr_value : Attribute value of the feature
+
+
+    RETURN(S)
+
+    : nodes_by_attr_value :  List of node filtered nodes.
+
+    """
+
+    g = graph
+    attr_field = str(attr_field)
+    attr_value = attr_value
+
+    nodes_data = g.nodes(data=True)
+
+    nodes_by_attr_value = []
+
+    for n in nodes_data:
+
+        if n[1]['geom']['properties'][attr_field] == attr_value:
+
+            nodes_by_attr_value.append(n)
+
+    return nodes_by_attr_value
 
 ####################### END SECTION FOR HELPER FUNCTIONS ##########################
 
